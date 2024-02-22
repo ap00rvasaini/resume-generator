@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Generator</title>
+<style>
+  body {
+    background-image: url('Picture1.jpg');
+    font-family: Arial, sans-serif;
+  }
+  h2,h3, button {
+    text-align: center; /* Aligning heading and button to center */
+  }
+  
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    
+  }
+  input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    display: block; /* Make the button a block element */
+    margin: 0 auto 20px; /* Center the button horizontally */
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  /* Center the generated resume */
+  #resumeContainer {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left; /* Align text to left within container */
+  }
+</style>
+</head>
+<body>
+
+<h2>Resume Generator</h2> <!-- Heading aligned to center -->
+
+<form id="resumeForm">
+  <label for="name">Name:</label>
+  <input type="text" id="name" required><br>
+
+  <label for="dob">Date of Birth:</label>
+  <input type="date" id="dob" required><br>
+
+  <label for="email">Email:</label>
+  <input type="text" id="email" required><br>
+
+  <label for="phone">Phone Number:</label>
+  <input type="text" id="phone" required><br>
+
+  <label for="bio">Short Bio:</label>
+  <textarea id="bio" required></textarea><br>
+
+  <button type="button" onclick="generateResume()">Generate Resume</button>
+</form>
+
+<div id="resumeContainer"></div>
+
+<script>
+function generateResume() {
+  var name = document.getElementById("name").value;
+  var dob = new Date(document.getElementById("dob").value);
+  var email = document.getElementById("email").value;
+  var phone = document.getElementById("phone").value;
+  var bio = document.getElementById("bio").value;
+
+  var today = new Date();
+  var age = today.getFullYear() - dob.getFullYear();
+  var monthDiff = today.getMonth() - dob.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+    age--;
+  }
+
+  var resume = `
+  
+    <h3>Resume</h3>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Date of Birth:</strong> ${dob.toDateString()} (Age: ${age})</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Phone Number:</strong> ${phone}</p>
+    <p><strong>Short Bio:</strong></p>
+    <p>${bio}</p>
+  `;
+
+  document.getElementById("resumeContainer").innerHTML = resume;
+}
+</script>
+
+</body>
+</html>
